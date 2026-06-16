@@ -25,8 +25,6 @@ variable "instance_type" {
   }
 }
 
-
-
 variable "sg_name" {
   type    = string
   default = "allow_terraform_vars"
@@ -43,9 +41,16 @@ variable "cidr" {
 }
 
 variable "instances" {
-  default = ["mongodb", "redis", "mysql", "rabbitmq"]
+  default = ["mongodb", "redis", "mysql", "rabbitmq", "frontend"]
   type = list
   
 }
 
+variable "zone_id" {
+  default = "Z0092557160TJGYZRJVWJ"  
+}
+
+variable "domain_name" {
+  default = "vijaansh.online" 
+}
 

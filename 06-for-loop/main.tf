@@ -1,22 +1,21 @@
 resource "aws_instance" "roboshop" {
-  #count = 2
-  count = length(var.instances)
+  for_each = var.instances
   ami                    = var.ami_id
-  instance_type          = var.instance_type
+  instance_type          = each.value.instance_type
   vpc_security_group_ids = [
-        aws_security_group.roboshop[count.index].id,
+        aws_security_group.roboshop[each.key].id,
         aws_security_group.common.id
     ] # list
   # labels, metadata, info, etc
   tags = {
-    Name = "${var.project}-${var.environment}-${var.instances[count.index]}" # interpolation
+    Name = "${var.project}-${var.environment}-${each.key}" # interpolation
   }
 }
 
 # It creates in default VPC
 resource "aws_security_group" "roboshop" {
-  count = length(var.instances)
-  name        = "${var.project}-${var.environment}-${var.instances[count.index]}"
+  for_each = var.instances
+  name        = "${var.project}-${var.environment}-${each.key}"
   description = "Allow TLS inbound traffic and all outbound traffic"
 
   # outbound traffic
@@ -28,7 +27,7 @@ resource "aws_security_group" "roboshop" {
   }
 
   tags = {
-    Name = "${var.project}-${var.environment}-${var.instances[count.index]}"
+    Name = "${var.project}-${var.environment}-${each.key}"
   }
 
   # first it creates SG and then modify instance SG
@@ -38,7 +37,7 @@ resource "aws_security_group" "roboshop" {
 }
 
 resource "aws_security_group" "common" {
-  name        = "${var.project}-${var.environment}-common-1"
+  name        = "${var.project}-${var.environment}-common"
   description = "Allow TLS inbound traffic and all outbound traffic"
 
   # outbound traffic

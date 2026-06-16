@@ -19,9 +19,5 @@ resource "aws_security_group" "allow_terraform" {
     cidr_blocks      = var.cidr
   }
   
-  tags = {
-    Name = "allow_terraform"
-    Project = "roboshop"
-    Environment = "dev"
-  }
+  tags = var.sg_tags
 }
