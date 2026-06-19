@@ -6,7 +6,7 @@ resource "aws_instance" "terraform_demo" {
      tags = var.ec2_tags
 }
 
-# It creates in default VPC
+# It creates in default VPC..
 resource "aws_security_group" "allow_terraform" {
   name        = var.sg_name
   description = "Allow TLS inbound traffic and all outbound traffic"
