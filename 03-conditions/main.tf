@@ -15,7 +15,7 @@ resource "aws_security_group" "allow_terraform" {
     egress {
     from_port        = var.port
     to_port          = var.port
-    protocol         = "-1" # all traffic
+    protocol         = "-1" # all traffic.
     cidr_blocks      = var.cidr
   }
   
